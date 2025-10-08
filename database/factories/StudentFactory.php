@@ -19,7 +19,7 @@ class StudentFactory extends Factory
     {
         return [
             
-            'name' => $this->faker->firstName() . ' ' . $this->faker->lastName(),
+            'name' => $this->faker->firstName() . ' ' . $this->faker->lastName(), // biar gaada gelarnya
             'date_of_birth' => $this->faker->date(),
             'classroom_id' => Classroom::factory(),    
             'email' => $this->faker->unique()->safeEmail(),

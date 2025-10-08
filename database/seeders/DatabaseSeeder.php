@@ -26,7 +26,9 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         $this->call([
+            SubjectSeeder::class,
             GuardianSeeder::class,
+            TeacherSeeder::class,
         ]);
 
     }

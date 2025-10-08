@@ -14,3 +14,5 @@ Route::get('/kontak', [App\Http\Controllers\ContactController::class, 'index']);
 Route::get('/students', [App\Http\Controllers\StudentController::class, 'index']);
 Route::get('/guardians', [App\Http\Controllers\GuardianController::class, 'index']);
 Route::get('/classrooms', [App\Http\Controllers\ClassroomController::class, 'index']);
+Route::get('/teacher', [App\Http\Controllers\TeacherController::class, 'index']);
+Route::get('/subject', [App\Http\Controllers\SubjectController::class, 'index']);

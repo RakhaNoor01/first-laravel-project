@@ -2,8 +2,8 @@
     <x-slot:judul> {{ $title }} </x-slot:judul>
 
     <div class="profile-container">
-        <img src="https://cdn.discordapp.com/attachments/758906180742807582/1422801816483008583/67.png?ex=68ddfef3&is=68dcad73&hm=3a1998420e93d7eb94de84a6a2cab490efa87b66fff4130aaa7ff803dc9f7bc4&" alt="Foto Profil" class="profile-picture">
-        <h1 class="text-8xl font-black">Ini adalah halaman profil</h1>
+        <img src="https://cdn.discordapp.com/attachments/1408440611547385948/1421300267281813544/Proyek_Baru_46_F9DB0B3.gif?ex=68e70906&is=68e5b786&hm=487a14c64e19ae776a72ca54e11994ed3f9e4742527824f74c0274f0930a0697&" alt="Foto Profil" class="profile-picture">
+        <h1 class="text-5xl">Ini adalah halaman profil</h1>
 
     </div>
 </x-layout>
