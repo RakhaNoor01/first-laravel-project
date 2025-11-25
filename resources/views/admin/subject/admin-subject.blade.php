@@ -1,0 +1,157 @@
+<x-admin.layout>
+    <x-slot name="title">{{ $title }}</x-slot>
+    
+    <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+        <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+            
+            {{-- Success Message --}}
+            @if(session('success'))
+                <div class="mb-4 p-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden"
+                x-data="{ 
+                    openAddModal: false, 
+                    openEditModal: false, 
+                    editSubjectId: null
+                }">
+                
+                {{-- Menu Table --}}
+                <x-admin.menu-table button-label="Add Subject" on-click="openAddModal = true" />
+
+                {{-- Modal Add --}}
+                <div x-show="openAddModal" 
+                     x-transition
+                     @click.self="openAddModal = false"
+                     class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+                     style="display: none;">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+                        <button @click="openAddModal = false"
+                            class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl font-bold">
+                            ✕
+                        </button>
+                        @include('admin.subject.create')
+                    </div>
+                </div>
+
+                {{-- Table --}}
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-4 py-3">#</th>
+                                <th scope="col" class="px-4 py-3">Subject Name</th>
+                                <th scope="col" class="px-4 py-3">Description</th>
+                                <th scope="col" class="px-4 py-3 text-center">Total Teachers</th>
+                                <th scope="col" class="px-4 py-3 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($subjects as $subject)
+                                <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="px-4 py-3">{{ $subjects->firstItem() + $loop->index }}</td>
+                                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+                                        <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded dark:bg-purple-900 dark:text-purple-300">
+                                            {{ $subject->name }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3">{{ Str::limit($subject->description, 60) }}</td>
+                                    <td class="px-4 py-3 text-center">
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                            {{ $subject->teachers_count }} Teachers
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center justify-center space-x-2">
+                                            {{-- Edit Button --}}
+                                            <button 
+                                                @click="openEditModal = true; editSubjectId = {{ $subject->id }}"
+                                                class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                                                title="Edit">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                                                    <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                                        No subjects found.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                {{-- Pagination --}}
+                <div class="p-4">
+                    {{ $subjects->links() }}
+                </div>
+
+                {{-- Modal Edit --}}
+                @if(isset($subjects) && $subjects->count() > 0)
+                    @foreach ($subjects as $subject)
+                        <div x-show="openEditModal && editSubjectId === {{ $subject->id }}" 
+                             x-transition
+                             @click.self="openEditModal = false"
+                             class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+                             style="display: none;">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+                                <button @click="openEditModal = false"
+                                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl font-bold">
+                                    ✕
+                                </button>
+                                @include('admin.subject.edit', ['subject' => $subject])
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+
+                {{-- Modal Delete --}}
+                <div x-show="openDeleteModal" 
+                     x-transition
+                     @click.self="openDeleteModal = false"
+                     class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+                     style="display: none;">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg w-full max-w-md p-6 relative">
+                        <button @click="openDeleteModal = false"
+                            class="absolute top-2 right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xl">
+                            ✕
+                        </button>
+
+                        <div class="text-center">
+                            <svg class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Delete Subject</h3>
+                            <p class="mb-4 text-gray-500 dark:text-gray-300">Are you sure you want to delete this subject? This action cannot be undone.</p>
+
+                            <div class="flex justify-center items-center space-x-4">
+                                <button @click="openDeleteModal = false"
+                                    class="py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-600">
+                                    Cancel
+                                </button>
+
+                                <form :action="deleteUrl" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="py-2 px-4 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600">
+                                        Yes, Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</x-admin.layout>

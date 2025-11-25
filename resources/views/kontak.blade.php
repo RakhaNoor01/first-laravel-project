@@ -1,4 +1,5 @@
 <x-layout>
-    <x-slot:judul> {{ $title }} </x-slot:judul>
-    <h3>Ini adalah halaman kontak</h3>
+    <x-slot name="title">{{ $title }}</x-slot>
+    <h1>Nomor Whatsapp : 0812312038123</h1>
+    <h1>Email : @gmail.com</h1>
 </x-layout>

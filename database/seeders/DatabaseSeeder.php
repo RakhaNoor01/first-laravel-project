@@ -2,9 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Classroom;
+use App\Models\Guardian;
+use App\Models\Student;
+use App\Models\Subject;
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,22 +18,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        Guardian::factory(10)->create();
+        Classroom::factory(5)
+        ->hasStudents(5)
+        ->Create();
+        Subject::factory(5)->hasTeachers(1)->create();
+        
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-
-        Classroom::factory(4)
-            ->hasStudents(5)
-            ->create();
-
-        $this->call([
-            SubjectSeeder::class,
-            GuardianSeeder::class,
-            TeacherSeeder::class,
-        ]);
-
     }
 }

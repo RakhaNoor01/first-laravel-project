@@ -9,9 +9,10 @@ class SubjectController extends Controller
 {
     public function index()
     {
+        $subjects = Subject::all();
         return view('subject', [
-            'title' => 'Subjects',
-            'subjects' => Subject::all()
+            'subjects' => $subjects,
+            'title' => 'Subject Data'
         ]);
     }
 }

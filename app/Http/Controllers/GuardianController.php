@@ -7,14 +7,12 @@ use Illuminate\Http\Request;
 
 class GuardianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
+        $guardians = Guardian::all();
         return view('guardians', [
-            'title' => 'Guardians',
-            'guardians' => Guardian::all()
+            'guardians' => $guardians,
+            'title' => 'Data Wali Murid'
         ]);
     }
 }

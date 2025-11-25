@@ -1,10 +1,8 @@
 <div>
     <nav class="bg-gray-800">
-
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex items-center">
-
                     <div class="shrink-0">
                         <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                             alt="Your Company" class="size-8" />
@@ -12,20 +10,19 @@
 
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-
                             <x-nav-link href="/home" :active="request()->is('home')">Home</x-nav-link>
                             <x-nav-link href="/kontak" :active="request()->is('kontak')">Contact</x-nav-link>
                             <x-nav-link href="/profil" :active="request()->is('profil')">Profil</x-nav-link>
-                            <x-nav-link href="/students" :active="request()->is('students')">Students</x-nav-link>
-                            <x-nav-link href="/guardians" :active="request()->is('guardians')">Guardians</x-nav-link>
-                            <x-nav-link href="/classrooms" :active="request()->is('classrooms')">Classrooms</x-nav-link>
+                            <x-nav-link href="/datasiswa" :active="request()->is('datasiswa')">Data Siswa</x-nav-link>
+                            <x-nav-link href="/guardianroute" :active="request()->is('guardianroute')">Guardians</x-nav-link>
+                            <x-nav-link href="/classroom" :active="request()->is('classroom')">Classroom</x-nav-link>
                             <x-nav-link href="/teacher" :active="request()->is('teacher')">Teacher</x-nav-link>
                             <x-nav-link href="/subject" :active="request()->is('subject')">Subject</x-nav-link>
-
+                            <x-nav-link href="/admin/dashboard" :active="request()->is('admin/dashboard')">Dashboard</x-nav-link>
                         </div>
                     </div>
                 </div>
+
                 <div class="hidden md:block">
                     <div class="ml-4 flex items-center md:ml-6">
                         <button type="button"
@@ -39,6 +36,7 @@
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </button>
+
                         <!-- Profile dropdown -->
                         <el-dropdown class="relative ml-3">
                             <button
@@ -51,7 +49,7 @@
 
                             <el-menu anchor="bottom end" popover
                                 class="w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
-                                <a href="#"
+                                <a href="/profil"
                                     class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden">Your
                                     profile</a>
                                 <a href="#"
@@ -63,6 +61,7 @@
                         </el-dropdown>
                     </div>
                 </div>
+
                 <div class="-mr-2 flex md:hidden">
                     <!-- Mobile menu button -->
                     <button type="button" command="--toggle" commandfor="mobile-menu"
@@ -72,6 +71,11 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
                             aria-hidden="true" class="size-6 in-aria-expanded:hidden">
                             <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
+                            aria-hidden="true" class="size-6 not-in-aria-expanded:hidden">
+                            <path d="="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"

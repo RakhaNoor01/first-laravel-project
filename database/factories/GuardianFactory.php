@@ -17,11 +17,11 @@ class GuardianFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'job' => fake()->jobTitle(),
-            'phone' => fake()->unique()->phoneNumber(),
-            'email' => fake()->unique()->safeEmail(),
-            'address' => fake()->address(),
+            'name' => $this->faker->name(),
+            'job' => $this->faker->jobTitle(),
+            'phone' => $this->faker->unique()->phoneNumber(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'address' => $this->faker->address(),
         ];
     }
 }

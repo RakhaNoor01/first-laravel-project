@@ -16,14 +16,21 @@ class SubjectFactory extends Factory
      */
     public function definition(): array
     {
-        $subjects = [
-            ['name' => 'Mathematics', 'description' => 'The study of numbers, quantities, shapes, and patterns.'],
-            ['name' => 'English', 'description' => 'The study of the English language, literature, and communication.'],
-            ['name' => 'Science', 'description' => 'The study of the natural world through observation and experimentation.'],
-            ['name' => 'History', 'description' => 'The study of past events, societies, and human development.'],
-            ['name' => 'Geography', 'description' => 'The study of the Earth\'s landscapes, environments, and human populations.'],
+        return [
+            'name' => fake()->unique()->randomElement([
+                'Mobile Development', 
+                'Web Development', 
+                'Informatika', 
+                'Internet of Things', 
+                'Game Development'
+            ]),
+            'description' => fake()->unique()->randomElement([
+                'Pengembangan aplikasi mobile untuk berbagai platform seperti Android dan iOS.',
+                'Pengembangan aplikasi web modern menggunakan HTML, CSS, JavaScript, dan framework.',
+                'Ilmu komputer, algoritma, pemrograman, dan teknologi informasi.',
+                'Internet of Things (IoT), sensor, microcontroller, dan sistem embedded.',
+                'Pengembangan game, game design, dan programming untuk berbagai platform.'
+            ])
         ];
-
-        return fake()->unique()->randomElement($subjects);
     }
 }

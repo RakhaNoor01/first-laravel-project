@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Classroom;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
@@ -18,13 +18,11 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            
-            'name' => $this->faker->firstName() . ' ' . $this->faker->lastName(), // biar gaada gelarnya
-            'date_of_birth' => $this->faker->date(),
-            'classroom_id' => Classroom::factory(),    
+            'name' => $this->faker->name(),
+            'date_of_birth' => $this->faker->date('Y-m-d', '-15 years'), // Tambahkan ini
+            'classroom_id' => Classroom::factory(),
             'email' => $this->faker->unique()->safeEmail(),
             'address' => $this->faker->address(),
-            
         ];
     }
 }

@@ -7,15 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-    /** @use HasFactory<\Database\Factories\TeacherFactory> */
     use HasFactory;
 
-    protected $table = 'teacher';
+    protected $fillable = [
+        'name',
+        'subject_id',
+        'phone',
+        'email',
+        'address',
+    ];
 
-    protected $fillable = ['name', 'subject_id', 'phone', 'email', 'address'];
-
+    // Relationship
     public function subject()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsTo(Subject::class, 'subject_id');
     }
 }

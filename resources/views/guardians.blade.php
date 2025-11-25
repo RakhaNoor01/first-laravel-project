@@ -1,48 +1,37 @@
 <x-layout>
-    <x-slot:judul>{{ $title }}</x-slot:judul>
-
-    <div class="flex flex-col">
-        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    No
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Nama
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Pekerjaan
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Telepon
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Email
-                                </th>
+    <x-slot name="title">{{ $title }}</x-slot>
+    <div class="flex justify-center mt-3">
+        <div class="w-full max-w-6xl bg-white p-6 rounded-2xl shadow-lg">
+            <h2 class="text-2xl font-bold mb-6 text-center">Daftar Data Wali Murid</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full border border-gray-200 table-auto">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="px-4 py-2 text-left">No</th>
+                            <th class="px-4 py-2 text-left">Name</th>
+                            <th class="px-4 py-2 text-left">Job</th>
+                            <th class="px-4 py-2 text-left">Phone</th>
+                            <th class="px-4 py-2 text-left">Email</th>
+                            <th class="px-4 py-2 text-left">Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($guardians as $guardian)
+                            <tr class="border-b">
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $guardian->name }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $guardian->job ?? '-' }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $guardian->phone }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $guardian->email }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $guardian->address }}</td>
                             </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($guardians as $guardian)
-                                <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $guardian->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $guardian->job }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $guardian->phone }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $guardian->email }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-4 py-8 text-center text-gray-500">No guardians found</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

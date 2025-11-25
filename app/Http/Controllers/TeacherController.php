@@ -9,9 +9,10 @@ class TeacherController extends Controller
 {
     public function index()
     {
+        $teachers = Teacher::with('subject')->get();
         return view('teacher', [
-            'title' => 'Teachers',
-            'teachers' => Teacher::with('subject')->get()
+            'teachers' => $teachers,
+            'title' => 'Data Guru'
         ]);
     }
 }
