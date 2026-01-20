@@ -15,12 +15,12 @@ class ProfilController extends Controller
     public function profil()
     {
         $data = [
-            'nama' => 'Zaky',
+            'nama' => 'Rakha',
             'kelas' => 'XI PPLG 1',
             'sekolah' => 'SMK RADEN UMAR SAID',
-            'hobi' => 'Tidur, Makan, Belajar, Main Roblox',
-            'email' => 'zack.aryasatya@gmail.com',
-            'nomorhp' => '081312341020 / 08889797791'
+            'hobi' => 'Org Ganteng',
+            'email' => 'rakhanoor12@gmail.com',
+            'nomorhp' => '081334142387'
         ];
         return view('profile', $data, [
             'title' => 'Profile'

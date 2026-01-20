@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 
 class AdminGuardianController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $guardians = Guardian::paginate(10);
+        $search = $request->search;
+
+        $guardians = Guardian::when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('job', 'like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.guardian.admin-guardian', [
             'guardians' => $guardians,

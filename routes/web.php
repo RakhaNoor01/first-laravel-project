@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminClassroomController;
 use App\Http\Controllers\Admin\AdminGuardianController;
 use App\Http\Controllers\Admin\AdminTeacherController;
 use App\Http\Controllers\Admin\AdminSubjectController;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,51 +36,64 @@ Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.pub
 
 /*
 |--------------------------------------------------------------------------
-| Admin Routes
+| Auth Routes
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-    // Student Management
-    Route::prefix('student')->name('student.')->group(function () {
-        Route::get('/', [AdminStudentController::class, 'index'])->name('index');
-        Route::post('/', [AdminStudentController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [AdminStudentController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [AdminStudentController::class, 'update'])->name('update');
-        Route::delete('/{id}', [AdminStudentController::class, 'destroy'])->name('destroy');
-    });
-    
-    // Classroom Management
-    Route::prefix('classroom')->name('classroom.')->group(function () {
-        Route::get('/', [AdminClassroomController::class, 'index'])->name('index');
-        Route::post('/', [AdminClassroomController::class, 'store'])->name('store');
-        Route::put('/{id}', [AdminClassroomController::class, 'update'])->name('update');
-    });
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Guardian Management
-    Route::prefix('guardian')->name('guardian.')->group(function () {
-        Route::get('/', [AdminGuardianController::class, 'index'])->name('index');
-        Route::post('/', [AdminGuardianController::class, 'store'])->name('store');
-        Route::put('/{id}', [AdminGuardianController::class, 'update'])->name('update');
-        Route::delete('/{id}', [AdminGuardianController::class, 'destroy'])->name('destroy');
-    });
+/*
+|--------------------------------------------------------------------------
+| Admin Routes (Protected with Middleware)
+|--------------------------------------------------------------------------
+*/
 
-    // Teacher Management
-    Route::prefix('teacher')->name('teacher.')->group(function () {
-        Route::get('/', [AdminTeacherController::class, 'index'])->name('index');
-        Route::post('/', [AdminTeacherController::class, 'store'])->name('store');
-        Route::put('/{id}', [AdminTeacherController::class, 'update'])->name('update');
-        Route::delete('/{id}', [AdminTeacherController::class, 'destroy'])->name('destroy');
-    });
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', 'admin'])
+    ->group(function () {
+        
+        // Dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        
+        // Student Management
+        Route::prefix('student')->name('student.')->group(function () {
+            Route::get('/', [AdminStudentController::class, 'index'])->name('index');
+            Route::post('/', [AdminStudentController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [AdminStudentController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [AdminStudentController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminStudentController::class, 'destroy'])->name('destroy');
+        });
+        
+        // Classroom Management
+        Route::prefix('classroom')->name('classroom.')->group(function () {
+            Route::get('/', [AdminClassroomController::class, 'index'])->name('index');
+            Route::post('/', [AdminClassroomController::class, 'store'])->name('store');
+            Route::put('/{id}', [AdminClassroomController::class, 'update'])->name('update');
+        });
 
-    // Subject Management
-    Route::prefix('subject')->name('subject.')->group(function () {
-        Route::get('/', [AdminSubjectController::class, 'index'])->name('index');
-        Route::post('/', [AdminSubjectController::class, 'store'])->name('store');
-        Route::put('/{id}', [AdminSubjectController::class, 'update'])->name('update');
+        // Guardian Management
+        Route::prefix('guardian')->name('guardian.')->group(function () {
+            Route::get('/', [AdminGuardianController::class, 'index'])->name('index');
+            Route::post('/', [AdminGuardianController::class, 'store'])->name('store');
+            Route::put('/{id}', [AdminGuardianController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminGuardianController::class, 'destroy'])->name('destroy');
+        });
+
+        // Teacher Management
+        Route::prefix('teacher')->name('teacher.')->group(function () {
+            Route::get('/', [AdminTeacherController::class, 'index'])->name('index');
+            Route::post('/', [AdminTeacherController::class, 'store'])->name('store');
+            Route::put('/{id}', [AdminTeacherController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminTeacherController::class, 'destroy'])->name('destroy');
+        });
+
+        // Subject Management
+        Route::prefix('subject')->name('subject.')->group(function () {
+            Route::get('/', [AdminSubjectController::class, 'index'])->name('index');
+            Route::post('/', [AdminSubjectController::class, 'store'])->name('store');
+            Route::put('/{id}', [AdminSubjectController::class, 'update'])->name('update');
+        });
     });
-});

@@ -2,14 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Classroom;
-use App\Models\Guardian;
-use App\Models\Student;
-use App\Models\Subject;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,15 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Guardian::factory(10)->create();
-        Classroom::factory(5)
-        ->hasStudents(5)
-        ->Create();
-        Subject::factory(5)->hasTeachers(1)->create();
-        
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Buat user admin
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('admin123'),
+            'email_verified_at' => now(),
         ]);
+
+        // Bisa tambahin user lain kalau mau
+        // User::factory(10)->create();
     }
 }

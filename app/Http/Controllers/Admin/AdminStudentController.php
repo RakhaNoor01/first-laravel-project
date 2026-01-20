@@ -9,9 +9,21 @@ use Illuminate\Http\Request;
 
 class AdminStudentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::with('classroom')->paginate(10);
+        $search = $request->search;
+
+        $students = Student::with('classroom')
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhereHas('classroom', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
+            })
+            ->paginate(7)
+            ->withQueryString();
+
         $classrooms = Classroom::all();
 
         return view('admin.student.admin-students', [

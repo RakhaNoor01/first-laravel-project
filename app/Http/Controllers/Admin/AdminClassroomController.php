@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class AdminClassroomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $classrooms = Classroom::withCount('students')->with('students')->get();
+        $search = $request->search;
+
+        $classrooms = Classroom::withCount('students')
+            ->with('students')
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->get();
         
         return view('admin.classroom.admin-classroom', [
             'classrooms' => $classrooms,

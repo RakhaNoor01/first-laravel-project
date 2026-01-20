@@ -8,9 +8,17 @@ use Illuminate\Http\Request;
 
 class AdminSubjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $subjects = Subject::withCount('teachers')->paginate(10);
+        $search = $request->search;
+
+        $subjects = Subject::withCount('teachers')
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.subject.admin-subject', [
             'subjects' => $subjects,
